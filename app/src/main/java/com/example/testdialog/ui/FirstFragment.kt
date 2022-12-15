@@ -14,6 +14,7 @@ class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
 
     private val binding get() = _binding!!
+    val model: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
