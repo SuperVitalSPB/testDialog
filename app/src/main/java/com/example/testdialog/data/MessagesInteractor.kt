@@ -2,9 +2,14 @@ package com.example.testdialog.data
 
 class MessagesInteractor() {
 
-    val interval: Long = 1
-    // val repository: Repository = Repository(interval)
+    var period: Long = 100
+        set(value) {
+            repository.period = value
+            field = value
+        }
+    val repository: Repository = Repository(period)
 
-    // fun getMessages() = repository.getMessages()
+    fun getMessages() = repository.getMessages()
+        .map { value -> "source 1: $value" }
 
 }

@@ -17,6 +17,7 @@ class FirstFragment : Fragment() {
 
     private val binding get() = _binding!!
     lateinit var viewmodel: MainViewModel
+    var adapter: MessagesAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,23 +26,24 @@ class FirstFragment : Fragment() {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
         viewmodel = MainViewModel(MessagesInteractor())
-        viewmodel.observeData(1000)
+        viewmodel.observeData()
 
-/*
-        val adapter = viewmodel.messages.value?.also { emptyArray<String>() }?.let { MessagesAdapter(it) }
         binding.recyclerview.adapter = adapter
         viewmodel.messages.observe(viewLifecycleOwner) {
             it?.let {
+                if (adapter == null) {
+                    adapter = MessagesAdapter(it)
+                    binding.recyclerview.adapter = adapter
+                }
                 adapter?.refreshData(it)
+                binding.recyclerview.layoutManager?.scrollToPosition(it.size-1)
             }
         }
-*/
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }

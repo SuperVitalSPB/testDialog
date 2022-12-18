@@ -14,31 +14,31 @@ const val TAG = "MainViewModel"
 
 class MainViewModel constructor(private val messagesInteractor: MessagesInteractor) : androidx.lifecycle.ViewModel() {
 
-    private lateinit var subscription : Observer<Long>
+    var messages : MutableLiveData<ArrayList<String>>
+    lateinit var observer : DisposableObserver<String>
 
-    var messages : MutableLiveData<ArrayList<String>> = MutableLiveData()
+    init {
+        messages =  MutableLiveData()
+        messages.value = ArrayList()
+    }
 
-
-    @SuppressLint("CheckResult")
-    fun observeData(period: Long) {
-        val observable = Observable.interval(period, TimeUnit.MILLISECONDS)
-
-        val observer = object : DisposableObserver<Long>() {
-            override fun onNext(value: Long) {
+    fun observeData() {
+        val observable = messagesInteractor.getMessages()
+        observer = object : DisposableObserver<String>() {
+            override fun onNext(value: String) {
                 Log.d(TAG, "value: $value")
-                if (value == 5L) {
-                    dispose()
-                    observeData(period%2)
+                messages.value?.let {
+                    it.add(value)
+                    messages.postValue(it)
                 }
             }
-            override fun onError(e: Throwable) {
-                TODO("Not yet implemented")
+            override fun onError(err: Throwable) {
+                Log.d(TAG, "onError: ${err.message}")
             }
             override fun onComplete() {
-                TODO("Not yet implemented")
+                Log.d(TAG, "onComplete")
             }
         }
-
         observable.subscribe(observer)
     }
 

@@ -1,5 +1,6 @@
 package com.example.testdialog.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,9 @@ class MessagesAdapter(private var messages: ArrayList<String>) : RecyclerView.Ad
 
     override fun getItemCount() = messages.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun refreshData(messages: ArrayList<String>) {
         this.messages = messages
+        notifyDataSetChanged()
     }
 }

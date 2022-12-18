@@ -1,12 +1,11 @@
 package com.example.testdialog.data
 
-// import io.reactivex.rxjava3.core.Observable
-// import java.util.concurrent.TimeUnit
+import io.reactivex.rxjava3.core.Observable
+import java.util.concurrent.TimeUnit
 
-class Repository(timeInterval: Long = 1000) {
 
-    // val messagesObserver: Observable<Long> = Observable.interval(timeInterval, TimeUnit.MILLISECONDS)
+class Repository(var period: Long = 1000) {
 
-    // fun getMessages() = messagesObserver
+    fun getMessages() = Observable.interval(period, TimeUnit.MILLISECONDS)
 
 }
