@@ -5,17 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.testdialog.R
+import com.example.testdialog.data.MessagesInteractor
 import com.example.testdialog.databinding.FragmentFirstBinding
+import com.example.testdialog.ui.adapter.MessagesAdapter
 
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
     private val binding get() = _binding!!
-    val model: MainViewModel by viewModels()
+    lateinit var viewmodel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,9 +24,18 @@ class FirstFragment : Fragment() {
     ): View? {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
+        viewmodel = MainViewModel(MessagesInteractor())
+        viewmodel.observeData(1000)
 
-
-
+/*
+        val adapter = viewmodel.messages.value?.also { emptyArray<String>() }?.let { MessagesAdapter(it) }
+        binding.recyclerview.adapter = adapter
+        viewmodel.messages.observe(viewLifecycleOwner) {
+            it?.let {
+                adapter?.refreshData(it)
+            }
+        }
+*/
         return binding.root
     }
 
