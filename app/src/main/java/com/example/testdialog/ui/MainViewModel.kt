@@ -16,6 +16,13 @@ class MainViewModel constructor(private val messagesInteractor: MessagesInteract
 
     var messages : MutableLiveData<ArrayList<String>>
     lateinit var observer : DisposableObserver<String>
+    var period
+        get() = messagesInteractor.period
+        set(value) {
+            observer.dispose()
+            messagesInteractor.period = value
+            observeData()
+        }
 
     init {
         messages =  MutableLiveData()
@@ -26,9 +33,8 @@ class MainViewModel constructor(private val messagesInteractor: MessagesInteract
         val observable = messagesInteractor.getMessages()
         observer = object : DisposableObserver<String>() {
             override fun onNext(value: String) {
-                Log.d(TAG, "value: $value")
                 messages.value?.let {
-                    it.add(value)
+                    it.add("$value ${it.size}" )
                     messages.postValue(it)
                 }
             }

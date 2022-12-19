@@ -3,8 +3,13 @@
     <string name="action_settings">Настройки</string>
     <string name="first_fragment_label">Реализация</string>
     <string name="second_fragment_label">Тестовое задание</string>
-    <string name="next">Задание</string>
+    <string name="task">Задание</string>
     <string name="previous">Назад</string>
+    <string name="interval">Интервал:\u0020</string>
+    <string name="source1">Источник 1:\u0020</string>
+    <string name="source2">Источник 2:\u0020</string>
+    <string name="position">Позиция:</string>
+    <string name="insert">вставить</string>
 
     <string name="lorem_ipsum">Время до субботнего вечера \n
         На гитхабе репозиторий - формат сдачи тестового) \n
